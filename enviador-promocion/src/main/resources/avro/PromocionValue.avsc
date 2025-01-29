@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorpromocion.avro",
+  "name": "PromocionValue",
+  "fields": [
+    {
+      "name": "nombre",
+      "type": "string"
+    },
+    {
+      "name": "descuento",
+      "type": "double"
+    },
+    {
+      "name": "categoria",
+      "type": "string"
+    }
+  ]
+}

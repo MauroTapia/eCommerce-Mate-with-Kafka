@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorventas.avro",
+  "name": "VentasKey",
+  "fields": [
+    {
+      "name": "categoria",
+      "type": "string"
+    }
+  ]
+}

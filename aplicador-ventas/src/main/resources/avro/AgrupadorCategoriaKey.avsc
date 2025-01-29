@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorproductos.avro",
+  "name": "AgrupadorCategoriaKey",
+  "fields": [
+    {
+      "name": "categoria",
+      "type": "string"
+    }
+  ]
+}

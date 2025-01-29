@@ -1,0 +1,23 @@
+ENUNCIADO
+KAFKA: 
+-Una(s) API(s) REST de insercion de datos (POST, PUT/PATCH, DELETE)
+-Un microservicio de PCS que haga un map utilizando low-level API
+-Un microservicio MIXBI que haga un join utilizando la API que prefieras:
+	- Low-level: necesitaras JPA y hacer join de tablas (ejemplo e-commerce)
+	- High-Level: necesitaras trabajar con KTables y hacer join de las mismas (ejemplo: academia)
+-Un microservicio AGR que haga una agregacion utilizando la high-level API
+-Una API REST de consulta de datos (get)
+
+ASPECTOS QUE SUMAN Y QUIERO COLOCARLES:
+- 2 brokers o mas de uno
+- Testing 
+- Prometheus y Grafana.
+-----------><--------------
+TEMATICA QUE ELEGI ABORDAR: 
+	ECOMMERCE DE ACESSORIOS DE MATE.
+TODO PARA COMENZAR: 
+	
+
+tomando ejemplo de esto: 
+Bien ya tengo el primer diagrama mas o menos planificado teniendo en cuenta el de academia
+LUNES: arrancar a codear producers e ir subiendo.

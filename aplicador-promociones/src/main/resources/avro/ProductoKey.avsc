@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorproductos.avro",
+  "name": "ProductoKey",
+  "fields": [
+    {
+      "name": "identificador",
+      "type": "string"
+    }
+  ]
+}

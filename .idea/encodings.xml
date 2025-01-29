@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/agrupador-categoria/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/agrupador-profesores/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aplicador-promociones/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aplicador-ventas/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aplicador-ventas/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/consultador-mates/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/consultador-mates/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/consultador-ventas/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/consultador-ventas/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/docker-jenkins/jenkins/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/enviador-productos/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/enviador-promocion/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/enviador-ventas/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/enviador-ventas/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/transformador-productos/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/transformador-productos/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

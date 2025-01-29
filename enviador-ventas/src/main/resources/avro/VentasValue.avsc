@@ -1,0 +1,24 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorventas.avro",
+  "name": "VentasValue",
+  "fields": [
+    {
+      "name": "identificador",
+      "type": "string"
+    },
+    {
+      "name": "cantidad",
+      "type": "int"
+    },
+    {
+      "name": "producto",
+      "type": "string"
+    },
+    {
+      "name": "ventaTimestamp",
+      "type": ["null", "long"],
+      "default": null
+    }
+  ]
+}

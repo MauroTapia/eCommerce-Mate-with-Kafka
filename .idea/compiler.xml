@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="agrupador-categoria" />
+        <module name="aplicador-ventas" />
+        <module name="consultador-ventas" />
+        <module name="enviador-ventas" />
+        <module name="aplicador-promociones" />
+        <module name="enviador-promocion" />
+        <module name="enviador-productos" />
+        <module name="transformador-productos" />
+        <module name="consultador-mates" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="" target="11" />
+      <module name="agrupador-profesores" target="11" />
+      <module name="aplicador-promociones (1)" target="11" />
+      <module name="aplicador-promociones (2)" target="11" />
+      <module name="consultador-clases" target="11" />
+      <module name="docker-jenkins" target="11" />
+      <module name="enviador-alumnos" target="11" />
+      <module name="enviador-productos (1)" target="11" />
+      <module name="enviador-productos (2)" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="" options="-parameters" />
+      <module name="agrupador-categoria" options="-parameters" />
+      <module name="agrupador-profesores" options="-parameters" />
+      <module name="aplicador-promociones" options="-parameters" />
+      <module name="aplicador-promociones (1)" options="-parameters" />
+      <module name="aplicador-promociones (2)" options="-parameters" />
+      <module name="aplicador-ventas" options="-parameters" />
+      <module name="consultador-clases" options="-parameters" />
+      <module name="consultador-mates" options="-parameters" />
+      <module name="consultador-ventas" options="-parameters" />
+      <module name="docker-jenkins" options="-parameters" />
+      <module name="enviador-alumnos" options="-parameters" />
+      <module name="enviador-productos" options="-parameters" />
+      <module name="enviador-productos (1)" options="-parameters" />
+      <module name="enviador-productos (2)" options="-parameters" />
+      <module name="enviador-promocion" options="-parameters" />
+      <module name="enviador-ventas" options="-parameters" />
+      <module name="transformador-productos" options="-parameters" />
+    </option>
+  </component>
+</project>

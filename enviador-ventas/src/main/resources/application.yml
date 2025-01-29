@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: enviador-ventas
+  kafka:
+    bootstrap-servers: kafka:29092,kafka2:29093
+    producer:
+      properties:
+        key.serializer: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer
+        value.serializer: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer
+        schema.registry.url: http://${schema-registry:localhost}:8081
+
+environment:
+  ventas-topic: ventas

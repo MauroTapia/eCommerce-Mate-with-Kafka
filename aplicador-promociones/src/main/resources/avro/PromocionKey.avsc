@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorpromocion.avro",
+  "name": "PromocionKey",
+  "fields": [
+    {
+      "name": "nombre",
+      "type": "string"
+    }
+  ]
+}

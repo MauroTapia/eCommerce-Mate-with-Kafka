@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.mix.avro",
+  "name": "VentasProductosMateValue",
+  "fields": [
+    {
+      "name": "identificador",
+      "type": "string"
+    },
+    {
+      "name": "producto",
+      "type": "string"
+    },
+    {
+      "name": "cantidad",
+      "type": "int"
+    },
+    {
+      "name": "precioConImpuesto",
+      "type": "double"
+    },
+    {
+      "name": "precioPromocionado",
+      "type": "double"
+    }
+  ]
+}

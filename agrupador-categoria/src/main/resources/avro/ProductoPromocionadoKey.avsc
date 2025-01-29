@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorproductos.avro",
+  "name": "ProductoPromocionadoKey",
+  "fields": [
+    {
+      "name": "categoria",
+      "type": ["null", "string"],
+      "default": null
+    }
+  ]
+}

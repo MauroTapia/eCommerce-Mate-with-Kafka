@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+topic-in-0: ventas-productos-mate
+
+spring:
+  application.name: consultador-ventas
+
+  cloud:
+    function.definition: process;
+
+    stream:
+      bindings:
+        process-in-0:
+          destination: ${topic-in-0}
+          consumer:
+            concurrency: 1
+            useNativeDecoding: true
+
+      kafka:
+        binder:
+          brokers: ${kafka:localhost}:29092
+
+      kafka.streams:
+        bindings:
+          process-in-0:
+            consumer:
+              keySerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+              valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+              applicationId: ${spring.application.name}
+
+        binder:
+          configuration:
+            commit.interval.ms: 100
+            session.timeout.ms: 10000
+            schema.registry.url: http://${schema-registry:localhost}:8081
+            auto.register.schemas: true
+            default.key.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+  datasource:
+    url: jdbc:postgresql://postgresVentas:5432/ventas_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate.default_schema: public
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

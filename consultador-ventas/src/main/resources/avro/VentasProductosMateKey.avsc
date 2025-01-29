@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.mix.avro",
+  "name": "VentasProductosMateKey",
+  "fields": [
+    {
+      "name": "categoria",
+      "type": "string"
+    }
+  ]
+}

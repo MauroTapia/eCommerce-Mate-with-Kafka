@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "com.hiberus.cursos.enviadorproductos.avro",
+  "name": "ProductoConImpuestoValue",
+  "fields": [
+    {
+      "name": "identificador",
+      "type": "string"
+    },
+    {
+      "name": "producto",
+      "type": "string"
+    },
+    {
+      "name": "precioConImpuesto",
+      "type": "double"
+    },
+    {
+      "name": "categoria",
+      "type": "string"
+    }
+  ]
+}
