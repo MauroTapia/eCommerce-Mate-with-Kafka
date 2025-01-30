@@ -10,7 +10,7 @@ public class ProductoKeyMapper implements Mapper<ProductoKey, ProductoDTO>{
     public ProductoKey dtoToEntity(ProductoDTO dto) {
 
         return ProductoKey.newBuilder()
-                .setIdentificador(dto.getIdentificador())
+                .setCategoria(dto.getCategoria())
                 .build();
     }
 }

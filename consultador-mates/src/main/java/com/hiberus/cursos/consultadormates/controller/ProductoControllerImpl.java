@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductoControllerImpl implements ProductoController {
 
     @Autowired
-    ProductoService productoService;
+    private ProductoService productoService;
 
     @Override
     @GetMapping("")
@@ -25,14 +25,16 @@ public class ProductoControllerImpl implements ProductoController {
         try {
             log.info("Recibiendo solicitud para obtener todos los productos");
             List<Producto> productos = productoService.getProductos();
+
+            if (productos.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
             return new ResponseEntity<>(productos, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            log.warn("Error al obtener productos: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         } catch (Exception e) {
             log.error("Error inesperado al obtener productos: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
-

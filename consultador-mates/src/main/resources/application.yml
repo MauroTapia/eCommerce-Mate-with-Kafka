@@ -1,7 +1,7 @@
 server:
   port: 8080
 
-topic-in-0: productos-mate-tipo
+topic-in-0: productos-promocionados
 
 spring:
   application.name: consultador-mates

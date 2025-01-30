@@ -4,7 +4,7 @@
   "name": "ProductoKey",
   "fields": [
     {
-      "name": "identificador",
+      "name": "categoria",
       "type": "string"
     }
   ]

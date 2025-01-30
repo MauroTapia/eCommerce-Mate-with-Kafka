@@ -1,8 +1,6 @@
 package com.hiberus.cursos.consultadormates.kafka.mapper;
 
-import com.hiberus.cursos.enviadorproductos.avro.Producto;
-import com.hiberus.cursos.enviadorproductos.avro.AgrupadorCategoriaKey;
-import com.hiberus.cursos.enviadorproductos.avro.AgrupadorCategoriaValue;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

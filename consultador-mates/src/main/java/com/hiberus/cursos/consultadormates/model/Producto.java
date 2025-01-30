@@ -13,10 +13,11 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 public class Producto {
-    private String categoria;
     @Id
     private String identificador;
+    private String categoria;
     private String producto;
     private Double precioConImpuesto;
     private Double precioPromocionado;
+    private Long promocionTimestamp;
 }

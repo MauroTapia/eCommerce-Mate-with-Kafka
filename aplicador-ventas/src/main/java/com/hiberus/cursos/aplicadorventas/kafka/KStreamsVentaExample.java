@@ -1,10 +1,8 @@
 package com.hiberus.cursos.aplicadorventas.kafka;
 
-
-
-import com.hiberus.cursos.enviadorproductos.avro.AgrupadorCategoriaKey;
-import com.hiberus.cursos.enviadorproductos.avro.AgrupadorCategoriaValue;
-import com.hiberus.cursos.enviadorproductos.avro.Producto;
+import com.hiberus.cursos.enviadorproductos.avro.ProductoPromocionado;
+import com.hiberus.cursos.enviadorproductos.avro.ProductoPromocionadoKey;
+import com.hiberus.cursos.enviadorproductos.avro.ProductoPromocionadoValue;
 import com.hiberus.cursos.enviadorventas.avro.VentasKey;
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
 import com.hiberus.cursos.mix.avro.VentasProductosMateKey;
@@ -15,6 +13,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -28,49 +28,62 @@ public class KStreamsVentaExample {
     }
 
     @Bean
-    public BiFunction<KStream<AgrupadorCategoriaKey, AgrupadorCategoriaValue>,
+    public BiFunction<KStream<ProductoPromocionadoKey, ProductoPromocionadoValue>,
             KStream<VentasKey, VentasValue>,
             KStream<VentasProductosMateKey, VentasProductosMateValue>> joiner() {
-        return (agrupadorStream, ventasStream) -> {
 
-            KTable<VentasProductosMateKey, VentasValue> ventaKTable = ventasStream
+        return (productosStream, ventasStream) -> {
+
+            KTable<VentasProductosMateKey, ProductoPromocionadoValue> productosKTable = productosStream
                     .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
                             .setCategoria(k.getCategoria())
+                            .build())
+                    .toTable(Named.as("PRODUCTOS_PROMOCIONADOS"), Materialized.as("PRODUCTOS_PROMOCIONADOS_TABLE"));
+
+            KTable<VentasProductosMateKey, VentasValue> ventasKTable = ventasStream
+                    .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
+                            .setCategoria(k.getCategoria())  // Usamos categoria del VentasKey
                             .build())
                     .toTable(Named.as("VENTAS"), Materialized.as("VENTAS_TABLE"));
 
-            KTable<VentasProductosMateKey, AgrupadorCategoriaValue> agrupadorKTable = agrupadorStream
-                    .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
-                            .setCategoria(k.getCategoria())
-                            .build())
-                    .toTable(Named.as("AGRUPADOR"), Materialized.as("PRODUCTOS_AGRUPADOS_TABLE"));
+            return productosKTable.join(ventasKTable, (productoPromocionadoValue, ventaValue) -> {
 
-            return agrupadorKTable.join(ventaKTable, (agrupadorValue, ventaValue) -> {
-                Optional<Producto> matchingProducto = agrupadorValue.getProductos().stream()
-                        .filter(p -> p.getProducto().equals(ventaValue.getProducto()))
-                        .findFirst();
+                        ProductoPromocionado matchingProducto = null;
+                        for (Map.Entry<String, List<ProductoPromocionado>> entry : productoPromocionadoValue.getProductosPorCategoria().entrySet()) {
+                            for (ProductoPromocionado producto : entry.getValue()) {
+                                if (producto.getProducto().equals(ventaValue.getProducto())) {
+                                    matchingProducto = producto;
+                                    break;
+                                }
+                            }
+                            if (matchingProducto != null) {
+                                break;
+                            }
+                        }
 
-                        if (matchingProducto.isPresent()) {
-                            Producto producto = matchingProducto.get();
-                            log.info("Producto encontrado: {}", producto.getProducto());
+                        if (matchingProducto != null) {
+                            log.info("Producto encontrado: {}", matchingProducto.getProducto());
 
-                            if (producto.getPromocionTimestamp() != null &&
-                                    producto.getPromocionTimestamp() > ventaValue.getVentaTimestamp()) {
+                            Optional<Long> promocionTimestamp = Optional.ofNullable(matchingProducto.getPromocionTimestamp());
+                            Optional<Long> ventaTimestamp = Optional.ofNullable(ventaValue.getVentaTimestamp());
+
+                            if (promocionTimestamp.isPresent() && ventaTimestamp.isPresent() && promocionTimestamp.get() > ventaTimestamp.get()) {
                                 log.info("Promoción es posterior a la venta. No se aplicará.");
+
                                 return VentasProductosMateValue.newBuilder()
                                         .setIdentificador(ventaValue.getIdentificador())
                                         .setProducto(ventaValue.getProducto())
                                         .setCantidad(ventaValue.getCantidad())
-                                        .setPrecioConImpuesto(producto.getPrecioConImpuesto())
-                                        .setPrecioPromocionado(producto.getPrecioConImpuesto())
+                                        .setPrecioConImpuesto(matchingProducto.getPrecioConImpuesto())
+                                        .setPrecioPromocionado(matchingProducto.getPrecioConImpuesto())
                                         .build();
                             } else {
                                 return VentasProductosMateValue.newBuilder()
-                                        .setIdentificador(producto.getIdentificador())
-                                        .setProducto(producto.getProducto())
+                                        .setIdentificador(matchingProducto.getIdentificador())
+                                        .setProducto(matchingProducto.getProducto())
                                         .setCantidad(ventaValue.getCantidad())
-                                        .setPrecioConImpuesto(producto.getPrecioConImpuesto())
-                                        .setPrecioPromocionado(producto.getPrecioPromocionado())
+                                        .setPrecioConImpuesto(matchingProducto.getPrecioConImpuesto())
+                                        .setPrecioPromocionado(matchingProducto.getPrecioPromocionado())
                                         .build();
                             }
                         } else {
@@ -83,10 +96,9 @@ public class KStreamsVentaExample {
                         if (v == null) {
                             log.warn("El valor es nulo para la clave: {}", k);
                         } else {
-                            log.info("Creadas las promociones -> clave: {} valor: {}", k, v);
+                            log.info("Producto con promoción creada -> clave: {} valor: {}", k, v);
                         }
                     });
         };
     }
-
 }

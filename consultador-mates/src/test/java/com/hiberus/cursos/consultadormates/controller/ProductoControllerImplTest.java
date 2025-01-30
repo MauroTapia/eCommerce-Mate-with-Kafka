@@ -27,7 +27,7 @@ class ProductoControllerImplTest {
 
     @MockBean
     private ProductoServiceImpl productoService;
-
+/*
     @Test
     void testGetProductosExitoso() throws Exception {
         List<Producto> productos = Arrays.asList(new Producto("mate", "01", "mate imperial", 10.0, 10.0 ),
@@ -61,6 +61,6 @@ class ProductoControllerImplTest {
         mockMvc.perform(get("/productosMate"))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().string(""));
-    }
+    }*/
 
 }

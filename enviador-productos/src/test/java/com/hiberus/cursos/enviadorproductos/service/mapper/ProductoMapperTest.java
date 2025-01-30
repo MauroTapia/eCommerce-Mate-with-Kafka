@@ -18,7 +18,7 @@ public class ProductoMapperTest {
         ProductoKey productoKey = new ProductoKeyMapper().dtoToEntity(productoDTO);
 
         assertNotNull(productoKey);
-        assertEquals("12345", productoKey.getIdentificador());
+        assertEquals("12345", productoKey.getCategoria());
     }
 
     @Test

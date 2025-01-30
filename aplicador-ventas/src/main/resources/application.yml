@@ -1,7 +1,7 @@
 server:
     port: 8080
 
-topic-in-0: productos-mate-tipo
+topic-in-0: productos-promocionados
 topic-in-1: ventas
 topic-out-0: ventas-productos-mate
 

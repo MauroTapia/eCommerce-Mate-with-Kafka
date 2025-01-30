@@ -1,6 +1,6 @@
 server.port: 8080
 
-topic-in-0: productos-promocionados
+topic-in-0: productos-transformados
 topic-out-0: productos-mate-tipo
 
 spring:
@@ -35,7 +35,7 @@ spring:
 
                 binder:
                     configuration:
-                        commit.interval.ms: 100
+                        commit.interval.ms: 1000
                         session.timeout.ms: 10000
                         schema.registry.url: http://${schema-registry:localhost}:8081
                         auto.register.schemas: true
