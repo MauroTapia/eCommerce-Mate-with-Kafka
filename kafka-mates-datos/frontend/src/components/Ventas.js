@@ -38,7 +38,7 @@ const Ventas = () => {
             <tr key={index}>
               <td>{venta.categoria}</td>
               <td>{venta.producto}</td>
-              <td>{venta.precio}</td>
+              <td>{venta.precioConImpuesto}</td>
               <td>{venta.cantidad}</td>
             </tr>
           ))}
