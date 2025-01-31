@@ -22,7 +22,7 @@ public class TransformProductIVAService {
     private KafkaTemplate<ProductoKey, ProductoConImpuestoValue> kafkaTemplate;
 
     private static final double IVA_RATE = 0.21;
-    private double redondear(double valor) {
+    public double redondear(double valor) {
         BigDecimal bd = new BigDecimal(valor).setScale(0, RoundingMode.HALF_UP);
         log.info("Valor original: {}, Valor redondeado: {}", valor, bd.doubleValue());
         return bd.doubleValue();

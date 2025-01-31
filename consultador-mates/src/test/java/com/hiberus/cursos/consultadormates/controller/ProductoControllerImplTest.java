@@ -27,11 +27,11 @@ class ProductoControllerImplTest {
 
     @MockBean
     private ProductoServiceImpl productoService;
-/*
+
     @Test
     void testGetProductosExitoso() throws Exception {
-        List<Producto> productos = Arrays.asList(new Producto("mate", "01", "mate imperial", 10.0, 10.0 ),
-                new Producto("mate 02", "02", "mate imperial", 11.0, 11.0));
+        List<Producto> productos = Arrays.asList(new Producto("01", "mate", "mate imperial", 10.0, 10.0, 10L),
+                new Producto("02", "mate 02", "mate imperial", 11.0, 11.0, 10L));
 
         Mockito.when(productoService.getProductos()).thenReturn(productos);
 
@@ -61,6 +61,6 @@ class ProductoControllerImplTest {
         mockMvc.perform(get("/productosMate"))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().string(""));
-    }*/
+    }
 
 }

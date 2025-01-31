@@ -8,16 +8,9 @@ KAFKA:
 -Un microservicio AGR que haga una agregacion utilizando la high-level API
 -Una API REST de consulta de datos (get)
 
-ASPECTOS QUE SUMAN Y QUIERO COLOCARLES:
-- 2 brokers o mas de uno
-- Testing 
+ASPECTOS QUE SUMAN:
+- 2 brokers
+- Testing en microservicios rest.
 - Prometheus y Grafana.
------------><--------------
-TEMATICA QUE ELEGI ABORDAR: 
-	ECOMMERCE DE ACESSORIOS DE MATE.
-TODO PARA COMENZAR: 
-	
+- proyecto dockerizado
 
-tomando ejemplo de esto: 
-Bien ya tengo el primer diagrama mas o menos planificado teniendo en cuenta el de academia
-LUNES: arrancar a codear producers e ir subiendo.
