@@ -19,7 +19,7 @@ spring:
 
       kafka:
         binder:
-          brokers: ${kafka:localhost}:29092
+          brokers: kafka:29092,kafka2:29093
 
       kafka.streams:
         bindings:

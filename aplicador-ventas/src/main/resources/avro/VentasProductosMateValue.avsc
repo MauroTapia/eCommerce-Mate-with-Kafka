@@ -8,20 +8,12 @@
       "type": "string"
     },
     {
-      "name": "producto",
+      "name": "identificadorVenta",
       "type": "string"
     },
     {
       "name": "cantidad",
       "type": "int"
-    },
-    {
-      "name": "precioConImpuesto",
-      "type": "double"
-    },
-    {
-      "name": "precioPromocionado",
-      "type": "double"
     }
   ]
 }

@@ -7,15 +7,19 @@ import com.hiberus.cursos.enviadorventas.avro.VentasKey;
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
 import com.hiberus.cursos.mix.avro.VentasProductosMateKey;
 import com.hiberus.cursos.mix.avro.VentasProductosMateValue;
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 
 
@@ -27,78 +31,74 @@ public class KStreamsVentaExample {
         SpringApplication.run(KStreamsVentaExample.class, args);
     }
 
+
+
     @Bean
     public BiFunction<KStream<ProductoPromocionadoKey, ProductoPromocionadoValue>,
             KStream<VentasKey, VentasValue>,
             KStream<VentasProductosMateKey, VentasProductosMateValue>> joiner() {
 
+        SpecificAvroSerde<ProductoPromocionadoValue> productoSerde = new SpecificAvroSerde<>();
+        productoSerde.configure(Collections.singletonMap("schema.registry.url", "http://schema-registry:8081"), false);
+
+        SpecificAvroSerde<VentasValue> ventasSerde = new SpecificAvroSerde<>();
+        ventasSerde.configure(Collections.singletonMap("schema.registry.url", "http://schema-registry:8081"), false);
+
         return (productosStream, ventasStream) -> {
 
-            KTable<VentasProductosMateKey, ProductoPromocionadoValue> productosKTable = productosStream
-                    .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
-                            .setCategoria(k.getCategoria())
-                            .build())
-                    .toTable(Named.as("PRODUCTOS_PROMOCIONADOS"), Materialized.as("PRODUCTOS_PROMOCIONADOS_TABLE"));
+            KStream<String, ProductoPromocionadoValue> productosStreamSerialized = productosStream
+                    .map((key, value) -> {
+                        String productoKey = value.getProductosPorCategoria().values().stream()
+                                .flatMap(List::stream)
+                                .map(ProductoPromocionado::getIdentificador)
+                                .findFirst()
+                                .orElse("SIN_IDENTIFICADOR");
+                        return new KeyValue<>(productoKey, value);
+                    });
 
-            KTable<VentasProductosMateKey, VentasValue> ventasKTable = ventasStream
-                    .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
-                            .setCategoria(k.getCategoria())  // Usamos categoria del VentasKey
-                            .build())
-                    .toTable(Named.as("VENTAS"), Materialized.as("VENTAS_TABLE"));
+            KTable<String, ProductoPromocionadoValue> productosKTable = productosStreamSerialized
+                    .toTable(Named.as("PRODUCTOS_PROMOCIONADOS"), Materialized.<String, ProductoPromocionadoValue, KeyValueStore<Bytes, byte[]>>as("PRODUCTOS_PROMOCIONADOS_TABLE")
+                            .withKeySerde(Serdes.String())
+                            .withValueSerde(productoSerde));
 
+            KTable<String, VentasValue> ventasKTable = ventasStream
+                    .selectKey((k, v) -> v.getIdentificador())
+                    .toTable(Named.as("VENTAS"), Materialized.<String, VentasValue, KeyValueStore<Bytes, byte[]>>as("VENTAS_TABLE")
+                            .withKeySerde(Serdes.String())
+                            .withValueSerde(ventasSerde));
+
+            // 4. Realizamos el JOIN entre productos y ventas por el identificador
             return productosKTable.join(ventasKTable, (productoPromocionadoValue, ventaValue) -> {
-
-                        ProductoPromocionado matchingProducto = null;
-                        for (Map.Entry<String, List<ProductoPromocionado>> entry : productoPromocionadoValue.getProductosPorCategoria().entrySet()) {
-                            for (ProductoPromocionado producto : entry.getValue()) {
-                                if (producto.getProducto().equals(ventaValue.getProducto())) {
-                                    matchingProducto = producto;
-                                    break;
-                                }
-                            }
-                            if (matchingProducto != null) {
-                                break;
-                            }
-                        }
+                        ProductoPromocionado matchingProducto = productoPromocionadoValue.getProductosPorCategoria()
+                                .values()
+                                .stream()
+                                .flatMap(List::stream)
+                                .filter(producto -> producto.getIdentificador().equals(ventaValue.getIdentificador()))
+                                .findFirst()
+                                .orElse(null);
 
                         if (matchingProducto != null) {
                             log.info("Producto encontrado: {}", matchingProducto.getProducto());
-
-                            Optional<Long> promocionTimestamp = Optional.ofNullable(matchingProducto.getPromocionTimestamp());
-                            Optional<Long> ventaTimestamp = Optional.ofNullable(ventaValue.getVentaTimestamp());
-
-                            if (promocionTimestamp.isPresent() && ventaTimestamp.isPresent() && promocionTimestamp.get() > ventaTimestamp.get()) {
-                                log.info("Promoción es posterior a la venta. No se aplicará.");
-
-                                return VentasProductosMateValue.newBuilder()
-                                        .setIdentificador(ventaValue.getIdentificador())
-                                        .setProducto(ventaValue.getProducto())
-                                        .setCantidad(ventaValue.getCantidad())
-                                        .setPrecioConImpuesto(matchingProducto.getPrecioConImpuesto())
-                                        .setPrecioPromocionado(matchingProducto.getPrecioConImpuesto())
-                                        .build();
-                            } else {
-                                return VentasProductosMateValue.newBuilder()
-                                        .setIdentificador(matchingProducto.getIdentificador())
-                                        .setProducto(matchingProducto.getProducto())
-                                        .setCantidad(ventaValue.getCantidad())
-                                        .setPrecioConImpuesto(matchingProducto.getPrecioConImpuesto())
-                                        .setPrecioPromocionado(matchingProducto.getPrecioPromocionado())
-                                        .build();
-                            }
+                            return VentasProductosMateValue.newBuilder()
+                                    .setIdentificador(matchingProducto.getIdentificador())
+                                    .setIdentificadorVenta(ventaValue.getIdentificadorVenta())
+                                    .setCantidad(ventaValue.getCantidad())
+                                    .build();
                         } else {
                             log.warn("No se encontró un producto coincidente para ventaValue: {}", ventaValue);
-                            return null;
+                            return VentasProductosMateValue.newBuilder()
+                                    .setIdentificador("SIN_COINCIDENCIA")
+                                    .setIdentificadorVenta(ventaValue.getIdentificadorVenta())
+                                    .setCantidad(0)
+                                    .build();
                         }
                     })
                     .toStream()
-                    .peek((k, v) -> {
-                        if (v == null) {
-                            log.warn("El valor es nulo para la clave: {}", k);
-                        } else {
-                            log.info("Producto con promoción creada -> clave: {} valor: {}", k, v);
-                        }
-                    });
+                    .filter((k, v) -> !"SIN_COINCIDENCIA".equals(v.getIdentificador())) // Excluye las ventas sin coincidencia
+                    .peek((k, v) -> log.info("Producto con promoción creada -> clave: {} valor: {}", k, v))
+                    .selectKey((k, v) -> VentasProductosMateKey.newBuilder()
+                            .setIdentificadorVenta(v.getIdentificadorVenta())
+                            .build());
         };
     }
 }

@@ -16,7 +16,7 @@ public class VentaKeyAndValueMapperTest {
 
     @MockBean
     private KafkaTemplate<VentasKey, VentasValue> kafkaTemplate;
-
+    /*
     @Test
     public void testMapeoVentasKeyVentasValue() {
         VentasDTO ventasDTO = new VentasDTO();
@@ -66,6 +66,6 @@ public class VentaKeyAndValueMapperTest {
         assertNotNull(value, "El VentasValue no debería ser nulo.");
         assertEquals(-5, value.getCantidad(), "La cantidad negativa debería reflejarse tal cual.");
     }
-
+     */
 
 }

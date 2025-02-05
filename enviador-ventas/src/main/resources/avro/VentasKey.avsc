@@ -4,7 +4,7 @@
   "name": "VentasKey",
   "fields": [
     {
-      "name": "categoria",
+      "name": "identificadorVenta",
       "type": "string"
     }
   ]

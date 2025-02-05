@@ -34,3 +34,18 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: [ "consultador-ventas:8080" ]
+
+  - job_name: "aplicador-ventas"
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ "aplicador-ventas:8080" ]
+
+  - job_name: "aplicador-promociones"
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ "aplicador-promociones:8080" ]
+
+  - job_name: "transformador-productos"
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ "transformador-productos:8080" ]

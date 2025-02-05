@@ -50,12 +50,12 @@ public class VentasServiceImpl implements VentasService {
             throw new DatosVentaInvalidosException("La venta no puede ser nula");
         }
 
-        if (ventasDTO.getCategoria() == null || ventasDTO.getCategoria().isBlank()) {
+        if (ventasDTO.getIdentificadorVenta() == null || ventasDTO.getIdentificadorVenta().isBlank()) {
             log.error("La categoría es nula o vacía");
             throw new CategoriaNoEncontradoException("La categoría no puede ser nula o vacía");
         }
 
-        if (ventasDTO.getProducto() == null || ventasDTO.getProducto().isBlank()) {
+        if (ventasDTO.getIdentificador() == null || ventasDTO.getIdentificador().isBlank()) {
             log.error("El producto es nulo o vacío");
             throw new ProductoNoEncontradoException("El producto no puede ser nulo o vacío");
         }

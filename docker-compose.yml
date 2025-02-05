@@ -286,99 +286,99 @@ services:
         networks:
             - kafka-mate
 
-    consultador-ventas:
-        build: ./consultador-ventas
-        container_name: consultador-ventas
-        restart: always
-        ports:
-            - "8089:8080"
-        environment:
-            - "kafka=kafka"
-            - "schema-registry=schema-registry"
-        networks:
-            - kafka-mate
+#    consultador-ventas:
+#        build: ./consultador-ventas
+#        container_name: consultador-ventas
+#        restart: always
+#        ports:
+#            - "8089:8080"
+#        environment:
+#            - "kafka=kafka"
+#            - "schema-registry=schema-registry"
+#        networks:
+#            - kafka-mate
 #
-    prometheus:
-        image: prom/prometheus
-        container_name: prometheus
-        command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
-            - '--web.console.libraries=/etc/prometheus/console_libraries'
-            - '--web.console.templates=/etc/prometheus/consoles'
-            - '--web.enable-lifecycle'
-        ports:
-            - 9090:9090
-        networks:
-            - kafka-mate
-        restart: unless-stopped
-        volumes:
-            - ./prometheus:/etc/prometheus
-            - prom_data:/prometheus
-
-
-    node-exporter:
-        image: prom/node-exporter:latest
-        container_name: node-exporter
-        restart: unless-stopped
-        volumes:
-            - /proc:/host/proc:ro
-            - /sys:/host/sys:ro
-            - /:/rootfs:ro
-        command:
-            - '--path.procfs=/host/proc'
-            - '--path.rootfs=/rootfs'
-            - '--path.sysfs=/host/sys'
-            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc|/run/user)($$|/)`'
-        expose:
-            - 9100
-        networks:
-            - kafka-mate
-
-    grafana:
-        image: grafana/grafana
-        container_name: grafana
-        ports:
-            - 3000:3000
-        restart: unless-stopped
-        environment:
-            - GF_SECURITY_ADMIN_USER=admin
-            - GF_SECURITY_ADMIN_PASSWORD=admin
-        volumes:
-            - ./grafana:/etc/grafana/provisioning/datasources
-        networks:
-            - kafka-mate
-
-    postgresSonar:
-        image: postgres:latest
-        container_name: postgresSonar
-        environment:
-            POSTGRES_USER: sonar
-            POSTGRES_PASSWORD: sonar
-            POSTGRES_DB: sonarqube
-        networks:
-            - kafka-mate
-        volumes:
-            - postgres_dataSonar:/var/lib/postgresql/data
-
-
-    sonarqube:
-        image: sonarqube:lts
-        container_name: sonarq
-        networks:
-            - kafka-mate
-        depends_on:
-            - postgres
-        ports:
-            - "9000:9000"
-        environment:
-            SONAR_JDBC_URL: jdbc:postgresql://postgresSonar:5432/sonarqube
-            SONAR_JDBC_USERNAME: sonar
-            SONAR_JDBC_PASSWORD: sonar
-        volumes:
-            - sonarqube_data:/opt/sonarqube/data
-            - sonarqube_logs:/opt/sonarqube/logs
-            - sonarqube_extensions:/opt/sonarqube/extensions
+#    prometheus:
+#        image: prom/prometheus
+#        container_name: prometheus
+#        command:
+#            - '--config.file=/etc/prometheus/prometheus.yml'
+#            - '--storage.tsdb.path=/prometheus'
+#            - '--web.console.libraries=/etc/prometheus/console_libraries'
+#            - '--web.console.templates=/etc/prometheus/consoles'
+#            - '--web.enable-lifecycle'
+#        ports:
+#            - 9090:9090
+#        networks:
+#            - kafka-mate
+#        restart: unless-stopped
+#        volumes:
+#            - ./prometheus:/etc/prometheus
+#            - prom_data:/prometheus
+#
+#
+#    node-exporter:
+#        image: prom/node-exporter:latest
+#        container_name: node-exporter
+#        restart: unless-stopped
+#        volumes:
+#            - /proc:/host/proc:ro
+#            - /sys:/host/sys:ro
+#            - /:/rootfs:ro
+#        command:
+#            - '--path.procfs=/host/proc'
+#            - '--path.rootfs=/rootfs'
+#            - '--path.sysfs=/host/sys'
+#            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc|/run/user)($$|/)`'
+#        expose:
+#            - 9100
+#        networks:
+#            - kafka-mate
+#
+#    grafana:
+#        image: grafana/grafana
+#        container_name: grafana
+#        ports:
+#            - 3000:3000
+#        restart: unless-stopped
+#        environment:
+#            - GF_SECURITY_ADMIN_USER=admin
+#            - GF_SECURITY_ADMIN_PASSWORD=admin
+#        volumes:
+#            - ./grafana:/etc/grafana/provisioning/datasources
+#        networks:
+#            - kafka-mate
+#
+#    postgresSonar:
+#        image: postgres:latest
+#        container_name: postgresSonar
+#        environment:
+#            POSTGRES_USER: sonar
+#            POSTGRES_PASSWORD: sonar
+#            POSTGRES_DB: sonarqube
+#        networks:
+#            - kafka-mate
+#        volumes:
+#            - postgres_dataSonar:/var/lib/postgresql/data
+#
+#
+#    sonarqube:
+#        image: sonarqube:lts
+#        container_name: sonarq
+#        networks:
+#            - kafka-mate
+#        depends_on:
+#            - postgres
+#        ports:
+#            - "9000:9000"
+#        environment:
+#            SONAR_JDBC_URL: jdbc:postgresql://postgresSonar:5432/sonarqube
+#            SONAR_JDBC_USERNAME: sonar
+#            SONAR_JDBC_PASSWORD: sonar
+#        volumes:
+#            - sonarqube_data:/opt/sonarqube/data
+#            - sonarqube_logs:/opt/sonarqube/logs
+#            - sonarqube_extensions:/opt/sonarqube/extensions
 
 
 volumes:

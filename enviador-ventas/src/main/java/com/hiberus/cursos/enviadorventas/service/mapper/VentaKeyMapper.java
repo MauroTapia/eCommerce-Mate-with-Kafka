@@ -10,7 +10,7 @@ public class VentaKeyMapper implements Mapper<VentasKey, VentasDTO>{
     public VentasKey dtoToEntity(VentasDTO dto) {
 
         return VentasKey.newBuilder()
-                .setCategoria(dto.getCategoria())
+                .setIdentificadorVenta(dto.getIdentificadorVenta())
                 .build();
     }
 }

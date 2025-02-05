@@ -22,6 +22,5 @@ public class ProductoListener  {
                 producto.topic(), producto.partition(), producto.offset(), producto.key());
 
         transformProductIVAService.transformar(producto.key(), producto.value());
-
     }
 }

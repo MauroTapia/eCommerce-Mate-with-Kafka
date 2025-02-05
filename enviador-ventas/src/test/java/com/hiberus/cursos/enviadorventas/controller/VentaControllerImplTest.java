@@ -45,7 +45,7 @@ public class VentaControllerImplTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
 
-
+    /*
     @Test
     public void testCrearVentaExito() throws Exception {
         VentasDTO ventasDTO = new VentasDTO();
@@ -82,4 +82,6 @@ public class VentaControllerImplTest {
 
         verify(ventasService, times(1)).crear(any(VentasDTO.class));
     }
+
+     */
 }

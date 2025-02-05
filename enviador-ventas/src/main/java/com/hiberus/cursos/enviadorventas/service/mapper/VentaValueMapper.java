@@ -10,9 +10,9 @@ public class VentaValueMapper implements Mapper<VentasValue, VentasDTO> {
     public VentasValue dtoToEntity(VentasDTO dto) {
 
         return VentasValue.newBuilder()
+                .setIdentificadorVenta(dto.getIdentificadorVenta())
                 .setIdentificador(dto.getIdentificador())
                 .setCantidad(dto.getCantidad())
-                .setProducto(dto.getProducto())
                 .setVentaTimestamp(System.currentTimeMillis())
                 .build();
     }
