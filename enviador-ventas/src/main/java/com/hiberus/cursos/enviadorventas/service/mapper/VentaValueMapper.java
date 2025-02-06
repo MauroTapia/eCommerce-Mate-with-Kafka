@@ -1,7 +1,7 @@
 package com.hiberus.cursos.enviadorventas.service.mapper;
 
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
+import com.hiberus.cursos.enviadorventas.model.dto.VentasDTO;
 
 
 public class VentaValueMapper implements Mapper<VentasValue, VentasDTO> {

@@ -1,4 +1,4 @@
-package com.hiberus.cursos.enviadorventas.dto;
+package com.hiberus.cursos.enviadorventas.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,10 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class VentasDTO {
+public class VentasRequest {
 
     private String identificador;
-    private String identificadorVenta;
     private int cantidad;
 
 }

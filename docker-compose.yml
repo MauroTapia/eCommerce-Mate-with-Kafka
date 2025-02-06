@@ -286,18 +286,18 @@ services:
         networks:
             - kafka-mate
 
-#    consultador-ventas:
-#        build: ./consultador-ventas
-#        container_name: consultador-ventas
-#        restart: always
-#        ports:
-#            - "8089:8080"
-#        environment:
-#            - "kafka=kafka"
-#            - "schema-registry=schema-registry"
-#        networks:
-#            - kafka-mate
-#
+    consultador-ventas:
+        build: ./consultador-ventas
+        container_name: consultador-ventas
+        restart: always
+        ports:
+            - "8089:8080"
+        environment:
+            - "kafka=kafka"
+            - "schema-registry=schema-registry"
+        networks:
+            - kafka-mate
+
 #    prometheus:
 #        image: prom/prometheus
 #        container_name: prometheus

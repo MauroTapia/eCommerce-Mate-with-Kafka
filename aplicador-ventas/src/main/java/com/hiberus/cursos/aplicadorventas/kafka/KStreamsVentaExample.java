@@ -12,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;
-import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.kstream.Named;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,8 +33,6 @@ public class KStreamsVentaExample {
     public static void main(final String[] args) {
         SpringApplication.run(KStreamsVentaExample.class, args);
     }
-
-
 
     @Bean
     public BiFunction<KStream<ProductoPromocionadoKey, ProductoPromocionadoValue>,
@@ -82,7 +83,10 @@ public class KStreamsVentaExample {
                             return VentasProductosMateValue.newBuilder()
                                     .setIdentificador(matchingProducto.getIdentificador())
                                     .setIdentificadorVenta(ventaValue.getIdentificadorVenta())
+                                    .setPrecioConImpuesto(matchingProducto.getPrecioConImpuesto())
+                                    .setPrecioPromocionado(matchingProducto.getPrecioPromocionado())
                                     .setCantidad(ventaValue.getCantidad())
+
                                     .build();
                         } else {
                             log.warn("No se encontró un producto coincidente para ventaValue: {}", ventaValue);

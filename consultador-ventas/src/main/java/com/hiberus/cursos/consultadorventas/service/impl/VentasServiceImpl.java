@@ -17,7 +17,6 @@ public class VentasServiceImpl implements VentasService {
     @Autowired
     VentaRepository ventaRepository;
 
-
     @Override
     public List<Venta> getVentas() {
         return ventaRepository.findAll();

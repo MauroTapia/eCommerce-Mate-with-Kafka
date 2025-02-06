@@ -1,7 +1,8 @@
 package com.hiberus.cursos.enviadorventas.controller;
 
 
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
+import com.hiberus.cursos.enviadorventas.model.VentasRequest;
+import com.hiberus.cursos.enviadorventas.model.dto.VentasDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,6 +13,6 @@ public interface VentaController {
     @ApiResponses({
             @ApiResponse(responseCode = "202", description = "Peticion aceptada")
     })
-    ResponseEntity<String> crearVenta(VentasDTO ventaDTO);
+    ResponseEntity<String> crearVenta(VentasRequest ventasRequest);
 
 }

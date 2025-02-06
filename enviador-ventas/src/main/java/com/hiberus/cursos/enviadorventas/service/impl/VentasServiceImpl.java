@@ -3,11 +3,11 @@ package com.hiberus.cursos.enviadorventas.service.impl;
 
 import com.hiberus.cursos.enviadorventas.avro.VentasKey;
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
 import com.hiberus.cursos.enviadorventas.exception.CantidadInvalidaException;
-import com.hiberus.cursos.enviadorventas.exception.CategoriaNoEncontradoException;
 import com.hiberus.cursos.enviadorventas.exception.DatosVentaInvalidosException;
 import com.hiberus.cursos.enviadorventas.exception.ProductoNoEncontradoException;
+import com.hiberus.cursos.enviadorventas.model.VentasRequest;
+import com.hiberus.cursos.enviadorventas.model.dto.VentasDTO;
 import com.hiberus.cursos.enviadorventas.service.VentasService;
 import com.hiberus.cursos.enviadorventas.service.mapper.VentaKeyMapper;
 import com.hiberus.cursos.enviadorventas.service.mapper.VentaValueMapper;
@@ -29,9 +29,14 @@ public class VentasServiceImpl implements VentasService {
 
 
     @Override
-    public void crear(VentasDTO ventasDTO) {
+    public void crear(VentasRequest ventasRequest) {
         try {
-            validarVentasDTO(ventasDTO);
+            validarVentasDTO(ventasRequest);
+            VentasDTO ventasDTO = VentasDTO.builder()
+                    .identificador(ventasRequest.getIdentificador())
+                    .cantidad(ventasRequest.getCantidad())
+                    .build();
+
 
             VentasKey key = new VentaKeyMapper().dtoToEntity(ventasDTO);
             VentasValue value = new VentaValueMapper().dtoToEntity(ventasDTO);
@@ -44,24 +49,19 @@ public class VentasServiceImpl implements VentasService {
         }
     }
 
-    public void validarVentasDTO(VentasDTO ventasDTO) {
-        if (ventasDTO == null) {
+    public void validarVentasDTO(VentasRequest ventasRequest) {
+        if (ventasRequest == null) {
             log.error("El objeto ventasDTO es nulo");
             throw new DatosVentaInvalidosException("La venta no puede ser nula");
         }
 
-        if (ventasDTO.getIdentificadorVenta() == null || ventasDTO.getIdentificadorVenta().isBlank()) {
-            log.error("La categoría es nula o vacía");
-            throw new CategoriaNoEncontradoException("La categoría no puede ser nula o vacía");
-        }
-
-        if (ventasDTO.getIdentificador() == null || ventasDTO.getIdentificador().isBlank()) {
+        if (ventasRequest.getIdentificador() == null || ventasRequest.getIdentificador().isBlank()) {
             log.error("El producto es nulo o vacío");
             throw new ProductoNoEncontradoException("El producto no puede ser nulo o vacío");
         }
 
-        if (ventasDTO.getCantidad() <= 0) {
-            log.error("La cantidad es inválida: {}", ventasDTO.getCantidad());
+        if (ventasRequest.getCantidad() <= 0) {
+            log.error("La cantidad es inválida: {}", ventasRequest.getCantidad());
             throw new CantidadInvalidaException("La cantidad debe ser mayor a cero");
         }
     }

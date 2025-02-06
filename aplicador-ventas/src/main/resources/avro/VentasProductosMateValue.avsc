@@ -4,16 +4,23 @@
   "name": "VentasProductosMateValue",
   "fields": [
     {
-      "name": "identificador",
+      "name": "identificadorVenta",
       "type": "string"
     },
     {
-      "name": "identificadorVenta",
+      "name": "identificador",
       "type": "string"
     },
     {
       "name": "cantidad",
       "type": "int"
-    }
+    },
+    {
+      "name": "precioConImpuesto",
+      "type": "double"
+    },{
+      "name": "precioPromocionado",
+      "type": "double"}
+
   ]
 }

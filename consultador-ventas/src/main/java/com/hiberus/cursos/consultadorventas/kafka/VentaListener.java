@@ -26,7 +26,7 @@ public class VentaListener {
     @Bean
     public Consumer<KStream<VentasProductosMateKey, VentasProductosMateValue>> process() {
         return ventaStream -> ventaStream
-                .peek((k, v) -> log.info("Recibida categoría con clave: {}", k.getCategoria()))
+                .peek((k, v) -> log.info("Recibida categoría con clave: {}", k.getIdentificadorVenta()))
                 .peek((categoriaKey, value) -> {
                     List<Venta> ventas = ventaMapper.toDTO(categoriaKey, value);
                     ventas.forEach(ventasService::guardarVenta);

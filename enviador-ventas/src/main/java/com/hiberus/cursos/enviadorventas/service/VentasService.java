@@ -1,10 +1,10 @@
 package com.hiberus.cursos.enviadorventas.service;
 
 
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
+import com.hiberus.cursos.enviadorventas.model.VentasRequest;
 
 public interface VentasService {
 
-    void crear(VentasDTO ventasDTO);
-    void validarVentasDTO(VentasDTO ventasDTO);
+    void crear(VentasRequest ventasRequest);
+    void validarVentasDTO(VentasRequest ventasRequest);
 }

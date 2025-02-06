@@ -15,8 +15,7 @@ public class VentaMapper implements Mapper<VentasProductosMateKey, VentasProduct
     public List<Venta> toDTO(VentasProductosMateKey key, VentasProductosMateValue value) {
         return List.of(
                 Venta.builder()
-                        .categoria(key.getCategoria())
-                        .producto(value.getProducto())
+                        .identificadorVenta(key.getIdentificadorVenta())
                         .identificador(value.getIdentificador())
                         .cantidad(value.getCantidad())
                         .precioConImpuesto(value.getPrecioConImpuesto())

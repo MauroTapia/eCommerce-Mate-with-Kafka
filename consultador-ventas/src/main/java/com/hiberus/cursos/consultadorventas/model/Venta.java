@@ -12,10 +12,10 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Entity
 public class Venta {
-    private String categoria;
-    @Id
+
     private String identificador;
-    private String producto;
+    @Id
+    private String identificadorVenta;
     private int cantidad;
     private double precioConImpuesto;
     private double precioPromocionado;

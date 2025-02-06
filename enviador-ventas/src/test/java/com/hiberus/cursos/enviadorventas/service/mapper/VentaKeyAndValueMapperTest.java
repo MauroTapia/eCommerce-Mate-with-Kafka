@@ -2,8 +2,6 @@ package com.hiberus.cursos.enviadorventas.service.mapper;
 
 import com.hiberus.cursos.enviadorventas.avro.VentasKey;
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;

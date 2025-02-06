@@ -2,16 +2,8 @@ package com.hiberus.cursos.enviadorventas.service;
 
 import com.hiberus.cursos.enviadorventas.avro.VentasKey;
 import com.hiberus.cursos.enviadorventas.avro.VentasValue;
-import com.hiberus.cursos.enviadorventas.dto.VentasDTO;
-import com.hiberus.cursos.enviadorventas.exception.CantidadInvalidaException;
-import com.hiberus.cursos.enviadorventas.exception.CategoriaNoEncontradoException;
-import com.hiberus.cursos.enviadorventas.exception.DatosVentaInvalidosException;
-import com.hiberus.cursos.enviadorventas.exception.ProductoNoEncontradoException;
 import com.hiberus.cursos.enviadorventas.service.impl.VentasServiceImpl;
-import com.hiberus.cursos.enviadorventas.service.mapper.VentaKeyMapper;
-import com.hiberus.cursos.enviadorventas.service.mapper.VentaValueMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,7 +14,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VentasServiceImplTest {
