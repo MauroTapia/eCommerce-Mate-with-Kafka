@@ -27,19 +27,21 @@ const Ventas = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>Categoría</th>
             <th>Producto</th>
-            <th>Precio</th>
+            <th>IdVenta</th>
             <th>Cantidad</th>
+            <th>Precio</th>
+            <th>precioConImpuesto</th>
           </tr>
         </thead>
         <tbody>
           {ventas.map((venta, index) => (
             <tr key={index}>
-              <td>{venta.categoria}</td>
-              <td>{venta.producto}</td>
-              <td>{venta.precioConImpuesto}</td>
+              <td>{venta.identificador}</td>
+              <td>{venta.identificadorVenta}</td>
               <td>{venta.cantidad}</td>
+              <td>{venta.precioConImpuesto}</td>
+              <td>{venta.precioPromocionado}</td>
             </tr>
           ))}
         </tbody>
