@@ -1,4 +1,5 @@
 # Kafka Mates Hiberus - Guía de Ejecución
+# PRESENTACION EN /eCommerce-Mate-with-Kafka/PROYECTO KAFKA.PDF
 
 Este documento proporciona las instrucciones necesarias para ejecutar la aplicación Kafka Mates Hiberus. La aplicación está dockerizada y cuenta con un backend en Python y un frontend en React.
 
